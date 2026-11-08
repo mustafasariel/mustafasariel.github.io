@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>BlokPop — Meydan okuma</title>
+    <meta name="description" content="Arkadaşının BlokPop meydan okuması. Oyun kuruluysa aynı bölüm açılır; değilse Google Play'e gider." />
+    <style>
+      :root { color-scheme: dark; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #f3f1ff; background: #0f1430; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; line-height: 1.6; }
+      main { width: min(92vw, 420px); padding: 28px 24px 32px; border-radius: 20px; background: #182050; box-shadow: 0 18px 50px rgba(0,0,0,.35); text-align: center; }
+      h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: .3px; }
+      p { margin: 8px 0; color: #c9ccf0; }
+      .level { font-size: 20px; color: #ffd166; margin: 14px 0 4px; }
+      a.btn { display: inline-block; margin-top: 18px; padding: 14px 24px; border-radius: 999px; background: #4dabf7; color: #081026; font-weight: 700; text-decoration: none; }
+      small { display: block; margin-top: 14px; color: #8d93c8; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>BlokPop</h1>
+      <p id="lead">Arkadaşın sana meydan okudu.</p>
+      <p class="level" id="level"></p>
+      <p id="mark"></p>
+      <a class="btn" id="play" href="https://play.google.com/store/apps/details?id=com.blokpop.game">Google Play'de aç</a>
+      <small id="note">Oyun kuruluysa aynı bölüm doğrudan açılır.</small>
+    </main>
+    <script>
+      (function () {
+        var q = new URLSearchParams(location.search);
+        var games = { exit: 'Çıkış Nerede?', pour: 'Pour', path: 'Yol' };
+        var g = q.get('g'), l = parseInt(q.get('l') || '', 10), k = (q.get('k') || '').toUpperCase(), m = parseInt(q.get('m') || '', 10);
+        var valid = games[g] && l > 0 && /^[A-Z2-9]{4}$/.test(k);
+        var play = 'https://play.google.com/store/apps/details?id=com.blokpop.game';
+        if (valid) {
+          document.getElementById('level').textContent = games[g] + ' · Bölüm ' + l;
+          if (m > 0) document.getElementById('mark').textContent = g === 'path' ? 'Geçilecek süre: ' + m + ' sn' : 'Geçilecek: ' + m + ' hamle';
+          var referrer = 'utm_source=challenge&utm_medium=share&utm_content=' + g + '-' + l + '-' + k;
+          play += '&referrer=' + encodeURIComponent(referrer);
+        } else {
+          document.getElementById('lead').textContent = 'Küpte 8 mini oyun, internetsiz oynanır.';
+        }
+        document.getElementById('play').href = play;
+        // Android without the app: straight to Play with the referrer. A phone
+        // with the app verified never loads this page; the link opens the game.
+        if (/Android/i.test(navigator.userAgent)) {
+          setTimeout(function () { location.replace(play); }, 600);
+        }
+      })();
+    </script>
+  </body>
+</html>

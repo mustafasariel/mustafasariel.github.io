@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.blokpop.game",
+      "sha256_cert_fingerprints": [
+        "45:8E:1F:62:9A:AC:C4:A6:67:04:21:A6:7B:38:D4:CB:EA:0C:7B:CE:78:06:93:8A:BD:1C:9E:AD:A9:77:16:78",
+        "EC:9F:DA:B2:0F:F7:A9:D5:E2:B4:E4:BD:F6:88:53:0D:D9:A6:6F:27:E0:2A:50:EF:DD:82:E3:27:D2:F4:3C:29"
+      ]
+    }
+  }
+]
